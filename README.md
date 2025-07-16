@@ -92,71 +92,6 @@ TRUENAS_APPS_URL=http://IP_OR_HOSTNAME:PORT
 
 ```yaml
 - type: custom-api
-<<<<<<< HEAD
-	title: TrueNAS Apps
-	url: ${TRUENAS_APPS_URL}/app.query.json
-	cache: 1m
-	template: |
-	{{ $apps := .JSON.Array "" }}
-	<div class="space-y-2">
-		<div class="flex font-semibold border-b border-muted pb-1 mb-2">
-		<div class="flex-1 size-h3">Name</div>
-		<div class="flex-1 size-h3">State</div>
-		<div class="flex-1 size-h3">Upgrade</div>
-		<div class="flex-1 size-h3">Ports</div>
-		</div>
-
-		{{ range $app := $apps }}
-		{{ $upgrade := $app.Bool "upgrade_available" }}
-		<div class="flex text-left items-start space-x-2" style="border-bottom:2px solid #ffffff0d;padding-top:5px;padding-bottom:5px;">
-			<!-- Name + Icon -->
-			<div class="flex-1 flex items-center space-x-2">
-			{{ $icon := $app.String "metadata.icon" }}
-			{{ if $icon }}
-				<img src="{{ $icon }}" alt="icon" class="w-5 h-5 rounded-sm" style="width:20px;display:inline-block !important;margin-right: 7px;" />
-			{{ else }}
-				<img src="https://www.truenas.com/wp-content/uploads/2020/08/cropped-TN-favicon-250x250.png" alt="icon" class="w-5 h-5 rounded-sm" style="width:20px;display:inline-block !important;margin-right: 7px;" />
-			{{ end }}
-			<span class="font-bold color-highlight size-h3">{{ $app.String "name" }}</span>
-			</div>
-
-			<!-- State -->
-			{{ $state := $app.String "state" }}
-			<div class="flex-1" style="{{ if ne $state "RUNNING" }}color: #d75757;{{ end }}">
-			{{ $state }}
-			</div>
-
-			<!-- Upgrade Status -->
-			<div class="flex-1">
-			{{ if $upgrade }}
-				<span style="/*color: #ff5c5c;font-weight: bold;*/">⚠️ Upgrade Available</span>
-			{{ else }}
-				<span style="/*color: #57b757;"*/>✅ Up to date</span>
-			{{ end }}
-			</div>
-
-			<!-- Ports -->
-			<div class="flex-1 text-sm">
-			{{ if $app.Exists "dedup_ports" }}
-				{{ $ports := $app.Array "dedup_ports" }}
-				{{ if (eq (len $ports) 0) }}
-				<span class="text-muted">–</span>
-				{{ else }}
-				{{ range $port := $ports }}
-					{{ $hp := $port.Int "host_port" }}
-					{{ $proto := $port.String "protocol" }}
-					<div>→ {{ $hp }}/{{ $proto }}</div>
-				{{ end }}
-				{{ end }}
-			{{ else }}
-				<span class="text-muted">–</span>
-			{{ end }}
-			</div>
-		</div>
-		{{ end }}
-	</div>
-```
-=======
   title: TrueNAS Apps
   url: ${TRUENAS_APPS_URL}/app.query.json
   cache: 1m
@@ -220,4 +155,3 @@ TRUENAS_APPS_URL=http://IP_OR_HOSTNAME:PORT
   	{{ end }}
   </div>
 ```
->>>>>>> 55a35524cba8a6a566a4576d611f3e0b73631b35
