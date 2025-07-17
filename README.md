@@ -1,10 +1,24 @@
-### Glance - TrueNAS Apps
+## Glance - TrueNAS Apps
 
 I created this guide so that others could monitor the applications running on their TrueNAS Scale instance via Glance.
 
 ![Glance](glance.png)
 
 This project utilizes the websocket client `midclt`, along with an `nginx` container to host the outputted JSON file for [Glance](https://github.com/glanceapp/glance) to read.
+
+## Steps
+
+- [Create the shell script and store it on the TrueNAS Scale system](#shell-script-configuration)
+
+- [Schedule it to run via CRON on TrueNAS Scale](#cron-job)
+
+- [Deploy an Nginx docker container to host the JSON files](#nginx)
+
+- [Add environment variable to your Glance instance](#glance)
+
+- [Add widget to Glance page](#glance-widget)
+
+***
 
 ### Shell script configuration
 
@@ -67,7 +81,13 @@ Enabled: Checked
 
 Click `Save`.
 
-### docker-compose.yaml
+***
+
+### Nginx
+
+This can be done anyway you like, but I chose to have TrueNAS run an Nginx container that hosts the JSON file that is outputted by the shell script.
+
+#### docker-compose.yaml
 
 ```yaml
 services:
@@ -82,6 +102,8 @@ services:
 version: '3.8'
 ```
 
+***
+
 ### Glance
 
 Glance will need an environment variable added (or you can manually edit the yaml file below)
@@ -89,6 +111,8 @@ Glance will need an environment variable added (or you can manually edit the yam
 ```
 TRUENAS_APPS_URL=http://IP_OR_HOSTNAME:PORT
 ```
+
+#### Glance widget
 
 ```yaml
 - type: custom-api
